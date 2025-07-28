@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Return Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-chart-line"></i> Investment Return Calculator</h1>
+            <div class="theme-toggle">
+                <button id="themeToggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="calculator-container">
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="sip">
+                    <i class="fas fa-calendar-alt"></i>
+                    SIP
+                </button>
+                <button class="mode-btn" data-mode="annual-increase">
+                    <i class="fas fa-chart-line"></i>
+                    Annual Increase SIP
+                </button>
+                <button class="mode-btn" data-mode="lumpsum">
+                    <i class="fas fa-coins"></i>
+                    Lump Sum
+                </button>
+            </div>
+
+            <!-- SIP Calculator -->
+            <div id="sip-calculator" class="calculator active">
+                <div class="input-section">
+                    <h2>SIP Calculator</h2>
+                    <div class="input-group">
+                        <label for="sip-amount">Monthly Investment (₹)</label>
+                        <input type="number" id="sip-amount" placeholder="Enter monthly investment" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="sip-rate">Annual Interest Rate (%)</label>
+                        <input type="number" id="sip-rate" placeholder="Enter annual interest rate" min="0" max="100" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="sip-duration">Duration (Years)</label>
+                        <input type="number" id="sip-duration" placeholder="Enter duration in years" min="1" max="50">
+                    </div>
+                    <div class="button-group">
+                        <button id="sip-calculate" class="calculate-btn">Calculate</button>
+                        <button id="sip-reset" class="reset-btn">Reset</button>
+                    </div>
+                </div>
+
+                <div id="sip-results" class="results-section hidden">
+                    <div class="kpi-cards">
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h3>Total Invested</h3>
+                                <div class="kpi-amount" id="sip-total-invested">₹0</div>
+                                <div class="kpi-words" id="sip-total-invested-words">Zero Rupees</div>
+                                <div class="kpi-usd" id="sip-total-invested-usd">$0</div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h3>Maturity Value</h3>
+                                <div class="kpi-amount" id="sip-maturity-value">₹0</div>
+                                <div class="kpi-words" id="sip-maturity-value-words">Zero Rupees</div>
+                                <div class="kpi-usd" id="sip-maturity-value-usd">$0</div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h3>Profit Earned</h3>
+                                <div class="kpi-amount" id="sip-profit-earned">₹0</div>
+                                <div class="kpi-words" id="sip-profit-earned-words">Zero Rupees</div>
+                                <div class="kpi-usd" id="sip-profit-earned-usd">$0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-section">
+                        <h3>Year-wise Breakdown</h3>
+                        <div id="sip-breakdown" class="breakdown-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Annual Increase SIP Calculator -->
+            <div id="annual-increase-calculator" class="calculator">
+                <div class="input-section">
+                    <h2>Annual Increase SIP Calculator</h2>
+                    <div class="input-group">
+                        <label for="annual-initial-amount">Initial Monthly Investment (₹)</label>
+                        <input type="number" id="annual-initial-amount" placeholder="Enter initial monthly investment" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="annual-rate">Annual Interest Rate (%)</label>
+                        <input type="number" id="annual-rate" placeholder="Enter annual interest rate" min="0" max="100" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="annual-duration">Duration (Years)</label>
+                        <input type="number" id="annual-duration" placeholder="Enter duration in years" min="1" max="50">
+                    </div>
+                    <div class="input-group">
+                        <label for="annual-increase-rate">Annual Increase Rate (%)</label>
+                        <input type="number" id="annual-increase-rate" placeholder="Enter annual increase rate" min="0" max="100" step="0.01">
+                    </div>
+                    <div class="button-group">
+                        <button id="annual-calculate" class="calculate-btn">Calculate</button>
+                        <button id="annual-reset" class="reset-btn">Reset</button>
+                    </div>
+                </div>
+
+                <div id="annual-results" class="results-section hidden">
+                    <div class="kpi-cards">
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h3>Total Invested</h3>
+                                <div class="kpi-amount" id="annual-total-invested">₹0</div>
+                                <div class="kpi-words" id="annual-total-invested-words">Zero Rupees</div>
+                                <div class="kpi-usd" id="annual-total-invested-usd">$0</div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h3>Maturity Value</h3>
+                                <div class="kpi-amount" id="annual-maturity-value">₹0</div>
+                                <div class="kpi-words" id="annual-maturity-value-words">Zero Rupees</div>
+                                <div class="kpi-usd" id="annual-maturity-value-usd">$0</div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h3>Profit Earned</h3>
+                                <div class="kpi-amount" id="annual-profit-earned">₹0</div>
+                                <div class="kpi-words" id="annual-profit-earned-words">Zero Rupees</div>
+                                <div class="kpi-usd" id="annual-profit-earned-usd">$0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-section">
+                        <h3>Year-wise Breakdown</h3>
+                        <div id="annual-breakdown" class="breakdown-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lump Sum Calculator -->
+            <div id="lumpsum-calculator" class="calculator">
+                <div class="input-section">
+                    <h2>Lump Sum Calculator</h2>
+                    <div class="input-group">
+                        <label for="lumpsum-amount">Initial Investment (₹)</label>
+                        <input type="number" id="lumpsum-amount" placeholder="Enter initial investment amount" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="lumpsum-rate">Annual Interest Rate (%)</label>
+                        <input type="number" id="lumpsum-rate" placeholder="Enter annual interest rate" min="0" max="100" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="lumpsum-duration">Duration (Years)</label>
+                        <input type="number" id="lumpsum-duration" placeholder="Enter duration in years" min="1" max="50">
+                    </div>
+                    <div class="button-group">
+                        <button id="lumpsum-calculate" class="calculate-btn">Calculate</button>
+                        <button id="lumpsum-reset" class="reset-btn">Reset</button>
+                    </div>
+                </div>
+
+                <div id="lumpsum-results" class="results-section hidden">
+                    <div class="kpi-cards">
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h3>Total Invested</h3>
+                                <div class="kpi-amount" id="lumpsum-total-invested">₹0</div>
+                                <div class="kpi-words" id="lumpsum-total-invested-words">Zero Rupees</div>
+                                <div class="kpi-usd" id="lumpsum-total-invested-usd">$0</div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h3>Final Value</h3>
+                                <div class="kpi-amount" id="lumpsum-final-value">₹0</div>
+                                <div class="kpi-words" id="lumpsum-final-value-words">Zero Rupees</div>
+                                <div class="kpi-usd" id="lumpsum-final-value-usd">$0</div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h3>Profit Earned</h3>
+                                <div class="kpi-amount" id="lumpsum-profit-earned">₹0</div>
+                                <div class="kpi-words" id="lumpsum-profit-earned-words">Zero Rupees</div>
+                                <div class="kpi-usd" id="lumpsum-profit-earned-usd">$0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-section">
+                        <h3>Year-wise Breakdown</h3>
+                        <div id="lumpsum-breakdown" class="breakdown-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
